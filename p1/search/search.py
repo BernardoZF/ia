@@ -87,6 +87,16 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
+    Lista_abiertos = util.Stack
+    Lista_cerrados = [problem.getStartState()]
+    Camino = [problem.getStar]
+    
+
+
+
+
+
+
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):

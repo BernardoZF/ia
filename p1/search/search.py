@@ -81,12 +81,31 @@ def depthFirstSearch(problem):
 
     To get started, you might want to try some of these simple commands to
     understand the search problem that is being passed in:
+    """
+    "*** YOUR CODE HERE ***"
+    from util import Stack
+    from game import Directions
+    s = Directions.SOUTH
+    w = Directions.WEST
+    n = Directions.NORTH
+    e = Directions.EAST
+
+    lista_abiertos = Stack()
+    lista_cerrados = []
+
+    nodo = problem.getStartState()
+
+    while !problem.isGoalState(nodo):
+        nodo = lista_abiertos.pop()
+
+        lista_cerrados.append(nodo)
+        lista_abiertos.push(problem.getSuccessors(nodo))
+
+    camino = [] # guardar las direcciones
 
     print("Start:", problem.getStartState())
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
-    """
-    "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):

@@ -98,7 +98,7 @@ def depthFirstSearch(problem):
         if current_state not in visited_list:
             visited_list.append(current_state)
 
-            if problem.goalState() is current_state:
+            if problem.isGoalState(current_state):
                 return moves
             else :
                 successors = problem.getSuccessors(current_state)
@@ -107,8 +107,8 @@ def depthFirstSearch(problem):
                 new_moves = moves + [successor_move]
                 new_node = (successor_state, new_moves)
                 open_list.push(new_node)
-
-    return moves
+    empty_moves = []
+    return empty_moves
 
     camino = [] # guardar las direcciones
 

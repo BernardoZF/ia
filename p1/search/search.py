@@ -17,6 +17,7 @@ In search.py, you will implement generic search algorithms which are called by
 Pacman agents (in searchAgents.py).
 """
 
+from p1.search.game import Actions
 import util
 
 class SearchProblem:
@@ -83,23 +84,32 @@ def depthFirstSearch(problem):
     understand the search problem that is being passed in:
     """
     "*** YOUR CODE HERE ***"
-    from util import Stack
-    from game import Directions
-    s = Directions.SOUTH
-    w = Directions.WEST
-    n = Directions.NORTH
-    e = Directions.EAST
 
-    lista_abiertos = Stack()
-    lista_cerrados = []
+    start_state = problem.getStartState()
+    start_node = (start_state, [])
 
-    nodo = problem.getStartState()
+    open_list = util.Stack()
 
-    while problem.isGoalState(nodo) != True:
-        nodo = lista_abiertos.pop()
+    visited_list = []
 
-        lista_cerrados.append(nodo)
-        lista_abiertos.push(problem.getSuccessors(nodo))
+    open_list.push(start_node)
+
+    while not open_list.isEmpty():
+        current_state, moves = open_list.pop()
+        if current_state not in visited_list:
+            visited_list.append(current_state)
+
+            if problem.goalState() is current_state:
+                return moves
+            else :
+                successors = problem.getSuccessors(current_state)
+            
+            for successor_state, successor_move, successor_cost in successors:
+                new_moves = moves + [successor_move]
+                new_node = (successor_state, new_moves)
+                open_list.push(new_node)
+
+    return moves
 
     camino = [] # guardar las direcciones
 

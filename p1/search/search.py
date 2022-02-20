@@ -17,6 +17,7 @@ In search.py, you will implement generic search algorithms which are called by
 Pacman agents (in searchAgents.py).
 """
 
+from sqlalchemy import false
 import util
 
 class SearchProblem:
@@ -186,7 +187,42 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    open_list = util.PriorityQueue()
+
+    visited_list = []
+
+    start_state = problem.getStartState()
+    start_node= (start_state, [], 0)
+
+    open_list.push(start_node, 0)
+
+    while not open_list.isEmpty():
+        current_state, moves, current_cost = open_list.pop()
+
+        current_node = (current_state, current_cost)
+        visited_list.append(current_node)
+
+        if problem.isGoalState(current_state):
+            return moves
+        else : 
+            successors = problem.getSuccessors(current_state)
+
+            for successor_state, successor_moves, successor_cost in successors:
+                new_moves = moves + [successor_moves]
+                new_cost = problem.getCostOfActions(new_moves)
+                new_node = (successor_state, new_moves, new_cost)
+
+                visited_flag = False
+                for visited in visited_list:
+                    visited_state, visited_cost = visited
+
+                    if (successor_state == visited_state) and (new_cost >= visited_cost):
+                        visited_flag = True
+                if not visited_flag:
+                    open_list.push(new_node, new_cost + heuristic(successor_state, problem))
+                    visited_list.append((successor_state, new_cost))
+
+    return []
 
 
 # Abbreviations

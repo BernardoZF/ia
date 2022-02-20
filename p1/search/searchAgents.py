@@ -34,6 +34,8 @@ description for details.
 Good luck and happy searching!
 """
 
+from doctest import FAIL_FAST
+from pickle import FALSE
 from game import Directions
 from game import Agent
 from game import Actions
@@ -288,6 +290,18 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
+        corners_visited = [False, False, False, False]
+
+        if(self.startingPosition == self.corners[0]):
+            corners_visited[0] = True
+        if(self.startingPosition == self.corners[1]):
+            corners_visited[1] = True
+        if(self.startingPosition == self.corners[2]):
+            corners_visited[2] = True
+        if(self.startingPosition == self.corners[3]):
+            corners_visited[3] = True
+
+        
 
     def getStartState(self):
         """
@@ -295,15 +309,21 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return self.startState
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        corners_visited = state[1]
 
+        if corners_visited[0] and corners_visited[1] and corners_visited[2] and corners_visited[3]:
+            return True
+        else: 
+            return False
+
+    
     def getSuccessors(self, state):
         """
         Returns successor states, the actions they require, and a cost of 1.

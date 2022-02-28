@@ -36,6 +36,7 @@ Good luck and happy searching!
 
 from argparse import Action
 from doctest import FAIL_FAST
+from os import stat
 from pickle import FALSE
 from xmlrpc.client import boolean
 
@@ -294,17 +295,7 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
-        self.corners_visited = [False, False, False, False]
-
-        if(self.startingPosition == self.corners[0]):
-            self.corners_visited[0] = True
-        if(self.startingPosition == self.corners[1]):
-            self.corners_visited[1] = True
-        if(self.startingPosition == self.corners[2]):
-            self.corners_visited[2] = True
-        if(self.startingPosition == self.corners[3]):
-            self.corners_visited[3] = True
-        
+        self.startingGameState = startingGameState
 
         
 
@@ -314,20 +305,22 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        return self.startingPosition
+        return self.startingPosition, []
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        corners_visited = self.corners_visited
+        position = state[0]
+        corners_visited = state[1]
         print(str(corners_visited))
 
-        if corners_visited[0] and corners_visited[1] and corners_visited[2] and corners_visited[3]:
-           return True
-        else: 
-            return False
+        if position in self.corners:
+            if not position in corners_visited:
+                corners_visited.append(position)
+            return len(corners_visited) == 4
+        return False
 
     
     def getSuccessors(self, state):
@@ -351,25 +344,23 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
-            x, y  = state
+            x, y = state[0]
+            corners_visited = state[1]
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y +dy)
             hitsWall = self.walls[nextx][nexty]
             if not hitsWall:
-
+                
+                successors_corners_visited  = list(corners_visited)
                 next_state = (nextx, nexty)
 
-                if next_state == self.corners[0]:
-                    self.corners_visited[0] = True
-                if next_state == self.corners[1]:
-                    self.corners_visited[1] = True
-                if next_state == self.corners[2]:
-                    self.corners_visited[2] = True
-                if next_state == self.corners[3]:
-                    self.corners_visited[3] = True
+                if next_state in self.corners:
+                    if not next_state in successors_corners_visited:
+                        successors_corners_visited.append(next_state)
 
                 cost = 1
-                successors.append(((next_state), action, cost))
+                successor = ((next_state, successors_corners_visited), action, cost)
+                successors.append(successor )
 
         self._expanded += 1 # DO NOT CHANGE
         return successors

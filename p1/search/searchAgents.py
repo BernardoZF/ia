@@ -315,11 +315,15 @@ class CornersProblem(search.SearchProblem):
         position = state[0]
         corners_visited = state[1]
         print(str(corners_visited))
-
+        
+        # comprobamos si el estado actual es unna de las esquinas 
         if position in self.corners:
+            #si la esuqina no esta visitda actualizamos las esquinas visitadas
             if not position in corners_visited:
                 corners_visited.append(position)
+            # devolveremos true cuando las 4  esquinas han sido visitadas 
             return len(corners_visited) == 4
+        #Como para estar en un estado final debes estar en alguna esquina se devuelve false de manera estandar
         return False
 
     
@@ -344,18 +348,27 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+            #obtenemos las cordenadas actuales
             x, y = state[0]
+            #obtenemos las esquinas que han sido visitadas
             corners_visited = state[1]
+            #obtenemos la direccion en la que nos movemos en esta accion
             dx, dy = Actions.directionToVector(action)
+            #obtenemos las nuevas coordenadas del movimiento
             nextx, nexty = int(x + dx), int(y +dy)
+            #comprobamos si este movimiento se puede hacer
             hitsWall = self.walls[nextx][nexty]
             if not hitsWall:
-                
+                #obtenemos la lista de esquinas visitadas antes del movimiento
                 successors_corners_visited  = list(corners_visited)
+                #obtenemos la nueva posicion
                 next_state = (nextx, nexty)
 
+                #comprobamos si la nueva coordenadas es una esquina
                 if next_state in self.corners:
+                    #si es una esquina comprobamos si ha sido visitada
                     if not next_state in successors_corners_visited:
+                        #si no ha sida visitada actualizamos las esquinas visitadas
                         successors_corners_visited.append(next_state)
 
                 cost = 1

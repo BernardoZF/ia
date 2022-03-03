@@ -111,13 +111,6 @@ def depthFirstSearch(problem):
     empty_moves = []
     return empty_moves
 
-    camino = [] # guardar las direcciones
-
-    print("Start:", problem.getStartState())
-    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
-    util.raiseNotDefined()
-
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"

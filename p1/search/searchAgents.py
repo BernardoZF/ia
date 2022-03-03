@@ -337,15 +337,14 @@ class CornersProblem(search.SearchProblem):
         "*** YOUR CODE HERE ***"
         position = state[0]
         corners_visited = state[1]
-        print(str(corners_visited))
         
         # comprobamos si el estado actual es unna de las esquinas 
         if position in self.corners:
             #si la esuqina no esta visitda actualizamos las esquinas visitadas
             if not position in corners_visited:
                 corners_visited.append(position)
-            # devolveremos true cuando las 4  esquinas han sido visitadas 
-            return len(corners_visited) == 4
+            # devolveremos true cuando todas las esquinas han sido visitadas 
+            return len(corners_visited) == len(self.corners)
         #Como para estar en un estado final debes estar en alguna esquina se devuelve false de manera estandar
         return False
 
@@ -433,22 +432,28 @@ def cornersHeuristic(state, problem):
     corners = problem.corners  # These are the corner coordinates
     # These are the walls of the maze, as a Grid (game.py)
     walls = problem.walls
-    gameState = problem.startingGameState
+    
     "*** YOUR CODE HERE ***"
-
+    gameState = problem.startingGameState
     pos = state[0]
     visited = state[1]
     heuristic = 0
 
+    # Comprobamos las esquinas que faltan por visitar
     remaining = [x for x in corners if x not in visited]
 
     dists = []
+
     if len(remaining) > 0:
         for c in remaining:
 
+            # Calculamos la distancia minima entre nuestra posicion y la esquina
+            # hacemos esto con todas las esquinas restantes
             dis = mazeDistance(pos, c, gameState)
             dists.append(dis)
 
+    # Elegimos el valor maximo entre las distancias a las esquinas
+    # como valor de la funcion heuristica
     if(len(dists) > 0):
         heuristic = max(dists)
     

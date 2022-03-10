@@ -32,3 +32,49 @@ class Heuristic1_Nucifora_Zambrano(StudentHeuristic):
         diff = 3 * corner_diff - move_player2
         # Si es del player 2 devolvemos la diferencia en negativo
         return  - diff
+
+
+class NFT_a_precio_de_floor(StudentHeuristic):
+  def get_name(self) -> str:
+      return "NFT_a_precio_de_floor"
+
+  def evaluation_function(self, state: TwoPlayerGameState) -> float:
+      corner = [state.board.get((1,1)), state.board.get((1, state.game.height)), state.board.get((state.game.width, 1)), state.board.get((state.game.width, state.game.height))]
+
+      corners_p1 = corner.count(state.player1.label)
+      corners_p2 = corner.count(state.player2.label)
+
+      move_player1 = len(state.game._get_valid_moves(state.board, state.player1.label))
+      move_player2 = len(state.game._get_valid_moves(state.board, state.player2.label))
+
+      if((move_player1 - move_player2) != 0):
+        if(corners_p1 - corners_p2) != 0:
+          return 0.3 * (100 * (move_player1 - move_player2)/(move_player1 + move_player2)) + 0.4 * (100 * (corners_p1 - corners_p2) / (corners_p1 + corners_p2)) + 0.3 *(state.game._choice_diff(state.board))
+        else:
+          return 0.5 * (100 * (move_player1 - move_player2)/(move_player1 + move_player2)) +  0.5 *(state.game._choice_diff(state.board))
+      else : 
+        return 0
+
+          
+
+
+class Gormiti_de_Willyrex(StudentHeuristic):
+  def get_name(self) -> str:
+      return "Gormiti_de_Willyrex"
+
+  def evaluation_function(self, state: TwoPlayerGameState) -> float:
+      corner = [state.board.get((1,1)), state.board.get((1, state.game.height)), state.board.get((state.game.width, 1)), state.board.get((state.game.width, state.game.height))]
+
+      corners_p1 = corner.count(state.player1.label)
+      corners_p2 = corner.count(state.player2.label)
+
+      move_player1 = len(state.game._get_valid_moves(state.board, state.player1.label))
+      move_player2 = len(state.game._get_valid_moves(state.board, state.player2.label))
+
+      if((move_player1 - move_player2) != 0):
+        if(corners_p1 - corners_p2) != 0:
+          return 0.3 * (100 * (move_player1 - move_player2)/(move_player1 + move_player2)) + 0.4 * (100 * (corners_p1 - corners_p2) / (corners_p1 + corners_p2)) + 0.3 *(state.game._choice_diff(state.board))
+        else:
+          return 0
+      else : 
+        return 0

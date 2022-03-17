@@ -257,7 +257,8 @@ class MinimaxAlphaBetaStrategy(Strategy):
         alpha: float,
         beta: float,
     ) -> float:
-        # NOTE <YOUR CODE HERE>
+
+
         if state.end_of_game or depth == 0:
             minimax_value = self.heuristic.evaluate(state)
             alpha = minimax_value
@@ -306,6 +307,8 @@ class MinimaxAlphaBetaStrategy(Strategy):
         alpha: float,
         beta: float,
         ) -> float:
+
+        
         """Max step of the minimax algorithm."""
         if state.end_of_game or depth == 0:
             minimax_value = self.heuristic.evaluate(state)

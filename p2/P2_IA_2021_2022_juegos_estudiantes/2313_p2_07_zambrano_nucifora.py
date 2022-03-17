@@ -1,4 +1,5 @@
 from os import stat
+from random import random
 from game import (
     TwoPlayerGameState,
 )
@@ -53,7 +54,7 @@ class NFT_a_precio_de_floor(StudentHeuristic):
         else:
           return 0.5 * (100 * (move_player1 - move_player2)/(move_player1 + move_player2)) +  0.5 *(state.game._choice_diff(state.board))
       else : 
-        return 0
+        return random()
 
           
 
@@ -75,6 +76,6 @@ class Gormiti_de_Willyrex(StudentHeuristic):
         if(corners_p1 - corners_p2) != 0:
           return 0.3 * (100 * (move_player1 - move_player2)/(move_player1 + move_player2)) + 0.4 * (100 * (corners_p1 - corners_p2) / (corners_p1 + corners_p2)) + 0.3 *(state.game._choice_diff(state.board))
         else:
-          return 0
+          return random()
       else : 
-        return 0
+        return random()

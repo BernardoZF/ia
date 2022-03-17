@@ -25,12 +25,12 @@ class ANSU_FATI_CHARCUTERO_CORUÑES(StudentHeuristic):
       #Comprobamos de quien es el turno
       if state.is_player_max(state.player1):
         move_player1 = len(state.game._get_valid_moves(state.board, state.player1.label))
-        diff = 3 * corner_diff - move_player1
+        diff = 4 * corner_diff - move_player1
         # Si es del player 1 devolvemos la diferencia normal
         return diff
       if state.is_player_max(state.player2):
         move_player2 = len(state.game._get_valid_moves(state.board, state.player2.label))
-        diff = 3 * corner_diff - move_player2
+        diff = 4 * corner_diff - move_player2
         # Si es del player 2 devolvemos la diferencia en negativo
         return  - diff
 

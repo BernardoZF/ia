@@ -7,9 +7,9 @@ from tournament import (
 )
 
 
-class Heuristic1_Nucifora_Zambrano(StudentHeuristic):
+class ANSU_FATI_CHARCUTERO_CORUÑES(StudentHeuristic):
   def get_name(self) -> str:
-      return "Heuristic1_Nucifora_Zambrano"
+      return "ANSU FATI CHARCUTERO CORUÑES"
 
   def evaluation_function(self, state: TwoPlayerGameState) -> float:
       corner = [state.board.get((1,1)), state.board.get((1, state.game.height)), state.board.get((state.game.width, 1)), state.board.get((state.game.width, state.game.height))]

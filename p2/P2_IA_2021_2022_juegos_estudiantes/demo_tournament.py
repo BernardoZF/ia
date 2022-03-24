@@ -1,3 +1,4 @@
+# pylint: disable=missing-class-docstring
 """Illustration of tournament.
 
 Authors:
@@ -50,6 +51,33 @@ class Heuristic3(StudentHeuristic):
         return simple_evaluation_function(state)
 
 
+class ANSU_FATI_CHARCUTERO_CORUÑES(StudentHeuristic):
+  def get_name(self) -> str:
+      return "ANSU FATI CHARCUTERO CORUÑES"
+
+  def evaluation_function(self, state: TwoPlayerGameState) -> float:
+      corner = [state.board.get((1,1)), state.board.get((1, state.game.height)), state.board.get((state.game.width, 1)), state.board.get((state.game.width, state.game.height))]
+      corner_diff = 0
+
+      # Se comprueba si se pasa en alguna esquina
+      for i in range (4):
+        if corner[i] == state.game.player1.label:
+          corner_diff += 10
+        if corner[i] == state.game.player2.label:
+          corner_diff -= 10
+      #Comprobamos de quien es el turno
+      if state.is_player_max(state.player1):
+        move_player1 = len(state.game._get_valid_moves(state.board, state.player1.label))
+        diff = 4 * corner_diff - move_player1
+        # Si es del player 1 devolvemos la diferencia normal
+        return diff
+      if state.is_player_max(state.player2):
+        move_player2 = len(state.game._get_valid_moves(state.board, state.player2.label))
+        diff = 4 * corner_diff - move_player2
+        # Si es del player 2 devolvemos la diferencia en negativo
+        return  - diff
+
+
 def create_match(player1: Player, player2: Player) -> TwoPlayerMatch:
 
     initial_board = None#np.zeros((dim_board, dim_board))
@@ -61,6 +89,7 @@ def create_match(player1: Player, player2: Player) -> TwoPlayerMatch:
         dim_board=dim_board,
     )"""
 
+    """
     initial_board = (
         ['..B.B..',
         '.WBBW..',
@@ -68,6 +97,7 @@ def create_match(player1: Player, player2: Player) -> TwoPlayerMatch:
         '.W.WWW.',
         '.BBWBWB']
     )
+    """
 
     if initial_board is None:
         height, width = 8, 8
@@ -94,11 +124,15 @@ def create_match(player1: Player, player2: Player) -> TwoPlayerMatch:
         initial_player=initial_player,
     )
 
-    return TwoPlayerMatch(game_state, max_seconds_per_move=1000, gui=False)
+    return TwoPlayerMatch(game_state, max_seconds_per_move=1000, gui=True)
 
 
-tour = Tournament(max_depth=3, init_match=create_match)
-strats = {'opt1': [Heuristic1], 'opt2': [Heuristic2], 'opt3': [Heuristic3]}
+tour = Tournament(max_depth=4, init_match=create_match)
+strats = {
+    'opt1': [Heuristic1],
+    'opt2': [Heuristic3],
+    'opt3': [ANSU_FATI_CHARCUTERO_CORUÑES]
+    }
 
 n = 1
 scores, totals, names = tour.run(

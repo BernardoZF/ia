@@ -202,18 +202,6 @@ class MinimaxAlphaBetaStrategy(Strategy):
 
         # NOTE <YOUR CODE HERE>
 
-        """
-        # Use this code snippet to trace the execution of the algorithm
-
-                 if self.verbose > 1:
-                    print('{}: [{:.2g}, {:.2g}]'.format(
-                            state.board,
-                            alpha,
-                            beta,
-                        )
-                    )
-        """
-
         successors = self.generate_successors(state)
         
         minimax_value = -np.inf
@@ -296,7 +284,6 @@ class MinimaxAlphaBetaStrategy(Strategy):
                         beta,
                     )
                 )
-
         return minimax_value
 
 
@@ -327,7 +314,6 @@ class MinimaxAlphaBetaStrategy(Strategy):
                         beta,
                     )
                 )
-
                 successor_minimax_value = self._min_value(
                     successor, depth - 1, alpha, beta,
                 )
@@ -347,5 +333,4 @@ class MinimaxAlphaBetaStrategy(Strategy):
                         beta,
                     )
                 )
-
         return minimax_value

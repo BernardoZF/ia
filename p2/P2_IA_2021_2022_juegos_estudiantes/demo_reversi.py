@@ -94,17 +94,18 @@ E.g., it can be an intermediate state.
 """
 initial_player = player_a  # Player who moves first.
 
+"""
 # Board at an intermediate state of the game.
 initial_board = (
     ['..B.B..',
      '.WBBW..',
      'WBWBB..',
      '.W.WWW.',
-     '.BBWBWB']
-)
+     '.BBWBWB'])
+"""
 
 # NOTE Uncoment to use standard initial board.
-# initial_board = None  # Standard initial board.
+initial_board = None  # Standard initial board.
 
 if initial_board is None:
     height, width = 8, 8

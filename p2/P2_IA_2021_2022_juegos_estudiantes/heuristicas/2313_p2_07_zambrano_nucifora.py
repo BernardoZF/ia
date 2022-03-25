@@ -23,18 +23,18 @@ class ANSU_FATI_CHARCUTERO_CORUÑES(StudentHeuristic):
 
         # Se comprueba si se pasa en alguna esquina
         for i in range(4):
-        if corner[i] == state.game.player1.label:
-          corner_diff += 10
-        if corner[i] == state.game.player2.label:
-          corner_diff -= 10
-        # Comprobamos de quien es el turno
-        if state.is_player_max(state.player1):
+          if corner[i] == state.game.player1.label:
+            corner_diff += 10
+          if corner[i] == state.game.player2.label:
+            corner_diff -= 10
+          # Comprobamos de quien es el turno
+          if state.is_player_max(state.player1):
             move_player1 = len(state.game._get_valid_moves(state.board, state.player1.label))
             diff = 4 * corner_diff - move_player1
             # Si es del player 1 devolvemos la diferencia normal
             return diff
 
-         if state.is_player_max(state.player2):
+          if state.is_player_max(state.player2):
             move_player2 = len(state.game._get_valid_moves(state.board, state.player2.label))
             diff = 4 * corner_diff - move_player2
             # Si es del player 2 devolvemos la diferencia en negativo

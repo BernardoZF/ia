@@ -1,17 +1,5 @@
 write_log(S) :- open('error_logs.txt', append, Out), write(Out, S), write(Out, '\n'), close(Out).
 
-% P18 (**):  Extract a slice from a list
-
-% slice(L1,I,K,L2) :- L2 is the list of the elements of L1 between
-%    index I and index K (both included).
-%    (list,integer,integer,list) (?,+,+,?)
-
-slice([X|_],1,1,[X]).
-slice([X|Xs],1,K,[X|Ys]) :- K > 1, 
-   K1 is K - 1, slice(Xs,1,K1,Ys).
-slice([_|Xs],I,K,Ys) :- I > 1, 
-   I1 is I - 1, K1 is K - 1, slice(Xs,I1,K1,Ys).
-
 /* slice([1, 2, 3 ,4],2,3,L2). */
 /***************
 * EJERCICIO 2. sum_pot_prod/4
@@ -24,13 +12,17 @@ slice([_|Xs],I,K,Ys) :- I > 1,
 *		Resultado: Numero de valor real resultado de la operacion sum_pot_prod. 
 *
 ****************/
-sum_pot_prod([], [], _, 0).
-sum_pot_prod(_, _, P, _) :- P < 0, write_log('ERROR 1.1 Potencia'), !, fail.
-sum_pot_prod(X, Y, _, _) :-  longitud(X,Lx), longitud(Y,Ly), Lx \= Ly, write_log('ERROR 1.2 Longitud'), !, fail.
-sum_pot_prod([X|Xs], [Y|Ys], P, R) :- sum_pot_prod(Xs, Ys, P, Q), R is (X*Y)^P + Q.
+potencia(A, 0, 1) :- not(A=0), !.
+potencia(X, Y, P) :- Y1 is Y-1, potencia(X, Y1, P1), P is P1*X, Y>0.
 
-longitud([],0).
-longitud([_|Xs],N):-longitud(Xs,M),N is M+1.
+sum_pot_prod([], [], _, 0).
+sum_pot_prod([X|X1], [Y|Y1], P, R) :- 
+    P < 0, print('Error 1.1 Potencia'), !, fail;
+    length([X|X1], N1), length([Y|Y1], N2), N1 =\= N2, print('Error 1.2 Longitud'), !, fail;
+    sum_pot_prod(X1, Y1, P, R1),
+    M is X*Y,
+    potencia(M, P, E),
+    R is R1 + E.
 
 
 /***************
@@ -48,6 +40,16 @@ segundo_penultimo([Y,_], _, Y) :-!.
 segundo_penultimo(L, _, _) :- longitud(L,Ll),  Ll < 2, write_log('ERROR 2.1 Longitud'), !, fail.
 segundo_penultimo([_,X|R], X, Y) :- segundo_penultimo([X|R], X, Y).
 segundo_penultimo([_|R], X, Y) :- segundo_penultimo(R, X, Y).
+
+penultimo(X,[X,_]).
+penultimo(X,[_,Y|Ys]) :- penultimo(X,[Y|Ys]).
+
+segundo(X,[_,X|Y]).
+
+segundo_penultimo(L, X, Y) :-
+    length(L, N), N < 2, print('Error 2.1 Longitud'), !, fail;
+    penultimo(Y, L),
+    segundo(X, L).
 
 
 /***************
@@ -333,15 +335,6 @@ k_vecinos_proximos(X_entrenamiento, Y_entrenamiento, K, X_test, Y_test) :-
 *		tasa_aciertos: Tasa de acierto promediada sobre las iteraciones leave-one-out
 *
 ****************/
-/* clasifica_patrones('iris_patrones.csv','iris_etiquetas.csv',K,Tasa_aciertos) :- 
-   csv_read_file('iris_patrones.csv', X_entrenamiento),
-   csv_read_file('iris_etiquetas.csv', Y_entrenamiento),
-   k_vecinos_proximos(X_entrenamiento, Y_entrenamiento, K, X_test, Y_test),
-   longitud(X_entrenamiento, L).
-
-clasifica_patrones_rec(X_entrenamiento, Y_entrenamiento, K, X, Y_test):-
- */
-
 
 
 /***************

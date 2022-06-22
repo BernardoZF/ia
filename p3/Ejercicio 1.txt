@@ -1,0 +1,35 @@
+* EJERCICIO 1.
+* 
+* slice([X|_],1,1,[X]).
+* 
+* Declarativa:
+* El corte de una lista entre el indice 1 y el indice 1 es el primer elemento de la lista
+*
+* slice([X|Xs],1,K,[X|Ys]) :- K > 1, 
+*    K1 is K - 1, slice(Xs,1,K1,Ys).
+* 
+* Declarativa:
+* Si el corte de la lista Xs entre los valores 1 y K1 es Ys,
+* entonces el último indice(K) es mayor que 1 y K será K menos 1 y el corte de la lista [X|Xs] entre 1 y K es [X|Ys]
+* 
+* slice([_|Xs],I,K,Ys) :- I > 1, 
+*    I1 is I - 1, K1 is K - 1, slice(Xs,I1,K1,Ys).
+*
+* Declarativa:
+* Si el corte de la lista Xs entre los valores I1 y K1 es Ys,
+* entonces el último indice(K) es mayor que el primer índice(I) y K será K menos 1 y I será I-1 y
+* el corte de la lista [X|Xs] entre 1 y K es [X|Ys]
+*
+* slice([1, 2, 3 ,4],2,3,L2))
+* 
+* Procedural:
+* No se aplica la primera clausula porque los índices no son 1 y 1 (son 2 y 3)
+* No se aplica la segunda clausula porque el índice 2 no es 1
+* Ahora mismo 2 es I, 3 es K, [1,2,3,4] -> y Xs es [2,3,4].
+* Aplicamos la tercera clausula. I1 es 1, K1 es 2, obtenemos slice([2,3,4], 1,2, Ys)
+* Ahora si se puede aplicar la segunda clausula
+* K1 es 2-1 = 1. X es 2 y se guarda para retornar junto a Ys. Ys es [3,4] obtenemos slice([3,4],1,1, Ys)
+* Ahora se puede aplicar la clausula 1, la cual devuelve el primer elemento, es decir 3. Ys es 3
+* Retornamos el slice([2,3,4], 1,2, [X|YS]), [X|YS] es [2,3].
+* El retorno de la tercera clausula es igual al de la segunda.
+* El programa retorna Ys = [2,3]
